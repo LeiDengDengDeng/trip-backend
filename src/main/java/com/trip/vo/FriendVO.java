@@ -9,6 +9,16 @@ public class FriendVO {
 
     private Integer friendId;
 
+    private String friendName;
+
+    public String getFriendName() {
+        return friendName;
+    }
+
+    public void setFriendName(String friendName) {
+        this.friendName = friendName;
+    }
+
     public Integer getUserId() {
         return userId;
     }
