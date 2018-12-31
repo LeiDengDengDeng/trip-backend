@@ -16,7 +16,6 @@ public class FriendServiceImpl implements FriendService{
     private FriendMapper friendMapper;
 
     @Override
-    //TODO test
     public ResponseVO addFriend(FriendVO friendVO) {
         Integer friendId=friendMapper.select(friendVO);
         if(friendId!=null)
