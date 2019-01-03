@@ -27,7 +27,7 @@ public class FileController {
     public ResponseVO upLoadFile(@RequestParam MultipartFile myfiles, HttpServletRequest request) throws IOException {
         String realFileName = "";
         if(myfiles.isEmpty()) {
-            return ResponseVO.buildFailure("图片未上传");
+            return ResponseVO.buildFailure("图片未上传!");
         }
         else {
             String realPath = uploadPath;
