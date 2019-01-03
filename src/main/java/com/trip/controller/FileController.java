@@ -33,9 +33,10 @@ public class FileController {
             String realPath = uploadPath;
             realFileName =new SimpleDateFormat("yyyyMMddHHmmss").format(new Date())+"fjj0918"+myfiles.getOriginalFilename();
             String realFileAddress = realPath+realFileName;
+            System.out.println(realFileAddress);
             FileUtils.copyInputStreamToFile(myfiles.getInputStream(), new File(realFileAddress));
         }
-        return ResponseVO.buildSuccess("/uploads/" + realFileName);
+        return ResponseVO.buildSuccess("/trip_image/" + realFileName);
     }
 
 }
