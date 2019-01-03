@@ -15,7 +15,7 @@ public class TripBackendApplication extends WebMvcConfigurerAdapter {
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		super.addResourceHandlers(registry);
-		registry.addResourceHandler("/trip_image/**").addResourceLocations(
+		registry.addResourceHandler("/uploads/**").addResourceLocations(
 				"file:"+uploadPath);
 
 	}

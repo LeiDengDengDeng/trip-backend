@@ -36,7 +36,7 @@ public class FileController {
             System.out.println(realFileAddress);
             FileUtils.copyInputStreamToFile(myfiles.getInputStream(), new File(realFileAddress));
         }
-        return ResponseVO.buildSuccess("/trip_image/" + realFileName);
+        return ResponseVO.buildSuccess("/uploads/" + realFileName);
     }
 
 }
