@@ -5,8 +5,11 @@ import com.trip.enumeration.UserState;
 import com.trip.mapper.UserMapper;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.UserVO;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 /**
@@ -14,6 +17,8 @@ import java.util.List;
  * @date 2019/1/2 下午11:41
  */
 @Service
+@Transactional
+@Slf4j
 public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
@@ -34,6 +39,7 @@ public class UserServiceImpl implements UserService {
 
             return ResponseVO.buildSuccess(userVO);
         }catch (Exception e){
+            log.info(e.getMessage());
             return ResponseVO.buildFailure(e.toString());
         }
 
@@ -45,6 +51,7 @@ public class UserServiceImpl implements UserService {
             userMapper.updateUserById(userVO);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
+            log.info(e.getMessage());
             return ResponseVO.buildFailure(e.toString());
         }
     }
@@ -55,6 +62,7 @@ public class UserServiceImpl implements UserService {
             UserVO userInfo = userMapper.selectUserInfoById(id);
             return ResponseVO.buildSuccess(userInfo);
         }catch (Exception e){
+            log.info(e.getMessage());
             return ResponseVO.buildFailure(e.toString());
         }
     }
@@ -65,6 +73,7 @@ public class UserServiceImpl implements UserService {
             List<UserVO> allUsers = userMapper.selectAllUsers();
             return ResponseVO.buildSuccess(allUsers);
         }catch (Exception e){
+            log.info(e.getMessage());
             return ResponseVO.buildFailure(e.toString());
         }
     }
@@ -75,6 +84,7 @@ public class UserServiceImpl implements UserService {
             List<UserVO> users = userMapper.selectUsersByState(state);
             return ResponseVO.buildSuccess(users);
         }catch (Exception e){
+            log.info(e.getMessage());
             return ResponseVO.buildFailure(e.toString());
         }
     }
@@ -87,6 +97,7 @@ public class UserServiceImpl implements UserService {
             UserVO user = userMapper.selectUserByUsername(username);
             return ResponseVO.buildSuccess(user);
         }catch (Exception e){
+            log.info(e.getMessage());
             return ResponseVO.buildFailure(e.toString());
         }
     }
