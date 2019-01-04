@@ -2,7 +2,6 @@ package com.trip.service;
 
 import com.trip.enumeration.UserIdentity;
 import com.trip.enumeration.UserState;
-import com.trip.exception.ServiceExcepion;
 import com.trip.mapper.UserMapper;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.UserVO;
@@ -27,72 +26,48 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO addUser(UserVO userVO) {
-        try {
-            UserVO userVO1 = userMapper.selectUserByAvatar(userVO.getAvatar());
-            if(userVO1 != null){
-                return ResponseVO.buildSuccess(userVO1);
-            }
-            userVO.setJoinDate(System.currentTimeMillis()/1000);
-            userVO.setState(UserState.UNCHECKED);
-            userVO.setIdentity(UserIdentity.USER);
-            userMapper.insertUser(userVO);
-
-            return ResponseVO.buildSuccess(userVO);
-        }catch (Exception e){
-            throw new ServiceExcepion(1,"error");
+        UserVO userVO1 = userMapper.selectUserByAvatar(userVO.getAvatar());
+        if(userVO1 != null){
+            return ResponseVO.buildSuccess(userVO1);
         }
+        userVO.setJoinDate(System.currentTimeMillis()/1000);
+        userVO.setState(UserState.UNCHECKED);
+        userVO.setIdentity(UserIdentity.USER);
+        userMapper.insertUser(userVO);
+
+        return ResponseVO.buildSuccess(userVO);
 
     }
 
     @Override
     public ResponseVO updateUser(UserVO userVO) {
-        try {
-            userMapper.updateUserById(userVO);
-            return ResponseVO.buildSuccess();
-        }catch (Exception e){
-            throw new ServiceExcepion(1,"error");
-        }
+        userMapper.updateUserById(userVO);
+        return ResponseVO.buildSuccess();
     }
 
     @Override
     public ResponseVO getUser(int id) {
-        try {
-            UserVO userInfo = userMapper.selectUserInfoById(id);
-            return ResponseVO.buildSuccess(userInfo);
-        }catch (Exception e){
-            throw new ServiceExcepion(1,"error");
-        }
+        UserVO userInfo = userMapper.selectUserInfoById(id);
+        return ResponseVO.buildSuccess(userInfo);
     }
 
     @Override
     public ResponseVO getAllUsers() {
-        try {
-            List<UserVO> allUsers = userMapper.selectAllUsers();
-            return ResponseVO.buildSuccess(allUsers);
-        }catch (Exception e){
-            throw new ServiceExcepion(1,"error");
-        }
+        List<UserVO> allUsers = userMapper.selectAllUsers();
+        return ResponseVO.buildSuccess(allUsers);
     }
 
     @Override
     public ResponseVO getUsersByState(String state) {
-        try {
-            List<UserVO> users = userMapper.selectUsersByState(state);
-            return ResponseVO.buildSuccess(users);
-        }catch (Exception e){
-            throw new ServiceExcepion(1,"error");
-        }
+        List<UserVO> users = userMapper.selectUsersByState(state);
+        return ResponseVO.buildSuccess(users);
     }
 
 
 
     @Override
     public ResponseVO getUserByUsername(String username) {
-        try {
-            UserVO user = userMapper.selectUserByUsername(username);
-            return ResponseVO.buildSuccess(user);
-        }catch (Exception e){
-            throw new ServiceExcepion(1,"error");
-        }
+        UserVO user = userMapper.selectUserByUsername(username);
+        return ResponseVO.buildSuccess(user);
     }
 }
