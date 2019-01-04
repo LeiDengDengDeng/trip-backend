@@ -2,17 +2,16 @@ package com.trip.service;
 
 import com.trip.enumeration.UserIdentity;
 import com.trip.enumeration.UserState;
+import com.trip.exception.ServiceExcepion;
 import com.trip.mapper.UserMapper;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.UserVO;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.sun.xml.internal.ws.spi.db.BindingContextFactory.LOGGER;
 
 /**
  * @author fjj
@@ -40,8 +39,7 @@ public class UserServiceImpl implements UserService {
 
             return ResponseVO.buildSuccess(userVO);
         }catch (Exception e){
-            LOGGER.info(e.getMessage());
-            return ResponseVO.buildFailure(e.toString());
+            throw new ServiceExcepion(1,"error");
         }
 
     }
@@ -52,8 +50,7 @@ public class UserServiceImpl implements UserService {
             userMapper.updateUserById(userVO);
             return ResponseVO.buildSuccess();
         }catch (Exception e){
-            LOGGER.info(e.getMessage());
-            return ResponseVO.buildFailure(e.toString());
+            throw new ServiceExcepion(1,"error");
         }
     }
 
@@ -63,8 +60,7 @@ public class UserServiceImpl implements UserService {
             UserVO userInfo = userMapper.selectUserInfoById(id);
             return ResponseVO.buildSuccess(userInfo);
         }catch (Exception e){
-            LOGGER.info(e.getMessage());
-            return ResponseVO.buildFailure(e.toString());
+            throw new ServiceExcepion(1,"error");
         }
     }
 
@@ -74,8 +70,7 @@ public class UserServiceImpl implements UserService {
             List<UserVO> allUsers = userMapper.selectAllUsers();
             return ResponseVO.buildSuccess(allUsers);
         }catch (Exception e){
-            LOGGER.info(e.getMessage());
-            return ResponseVO.buildFailure(e.toString());
+            throw new ServiceExcepion(1,"error");
         }
     }
 
@@ -85,8 +80,7 @@ public class UserServiceImpl implements UserService {
             List<UserVO> users = userMapper.selectUsersByState(state);
             return ResponseVO.buildSuccess(users);
         }catch (Exception e){
-            LOGGER.info(e.getMessage());
-            return ResponseVO.buildFailure(e.toString());
+            throw new ServiceExcepion(1,"error");
         }
     }
 
@@ -98,8 +92,7 @@ public class UserServiceImpl implements UserService {
             UserVO user = userMapper.selectUserByUsername(username);
             return ResponseVO.buildSuccess(user);
         }catch (Exception e){
-            LOGGER.info(e.getMessage());
-            return ResponseVO.buildFailure(e.toString());
+            throw new ServiceExcepion(1,"error");
         }
     }
 }
