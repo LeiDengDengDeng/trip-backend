@@ -1,5 +1,6 @@
 package com.trip.mapper;
 
+import com.alibaba.fastjson.JSONObject;
 import com.trip.vo.ScenicScoreVO;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +34,11 @@ public class ScenicScoreMapperTest {
         scoreVO.setUserId(1);
         scoreVO.setScenicId(2);
         scenicScoreMapper.update(scoreVO);
+    }
+
+    @Test
+    public void selectScore(){
+        System.out.println(JSONObject.toJSONString(scenicScoreMapper.selectScores(2)));
     }
 
 }

@@ -12,6 +12,10 @@
      scenic_id, score, comment, user_id, add_time
   </sql>
 
+  <select id="selectScores" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/> FROM scenic_score WHERE scenic_id=#{scenicId}
+  </select>
+
   <insert id="insertSelective" parameterType="com.trip.vo.ScenicScoreVO">
     insert into scenic_score
     <trim prefix="(" suffix=")" suffixOverrides=",">
