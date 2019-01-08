@@ -31,6 +31,8 @@ public class UserVO {
     private UserState state;
     // 用户身份
     private UserIdentity identity;
+    // 用户所在地址
+    private String address;
 
     public Integer getId() {
         return id;
@@ -118,5 +120,13 @@ public class UserVO {
 
     public void setIdentity(UserIdentity identity) {
         this.identity = identity;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
     }
 }

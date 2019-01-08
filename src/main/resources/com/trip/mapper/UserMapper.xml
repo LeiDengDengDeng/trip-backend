@@ -3,8 +3,8 @@
 <mapper namespace="com.trip.mapper.UserMapper">
     <insert id="insertUser" parameterType="com.trip.vo.UserVO"
             useGeneratedKeys="true" keyProperty="id">
-        insert into user(username,name,gender,avatar,pictureUrl,joinDate,state,identity,nickname,phone)
-        values(#{username},#{name},#{gender},#{avatar},#{pictureUrl},#{joinDate},#{state},#{identity},#{nickname},#{phone})
+        insert into user(username,name,gender,avatar,pictureUrl,joinDate,state,identity,nickname,phone,address)
+        values(#{username},#{name},#{gender},#{avatar},#{pictureUrl},#{joinDate},#{state},#{identity},#{nickname},#{phone},#{address})
      </insert>
 
     <update id="updateUserById" parameterType="com.trip.vo.UserVO">
@@ -27,6 +27,9 @@
             </if>
             <if test="pictureUrl != null">
                 pictureUrl = #{pictureUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address = #{address,jdbcType=VARCHAR},
             </if>
             <if test="state != null">
                 state = #{state},

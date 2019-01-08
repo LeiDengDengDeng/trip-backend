@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trip.mapper.TeamMapper">
+    <insert id="insertTeam" parameterType="com.trip.vo.TeamVO"
+            useGeneratedKeys="true" keyProperty="id">
+        insert into team(name,establish_time,minimum_limit,maximum_limit,start_time,end_time,scenic_id)
+        values (#{name},#{establishTime},#{minimumLimit},#{maximumLimit},#{startTime},#{endTime},#{scenicId})
+    </insert>
+
+</mapper>
