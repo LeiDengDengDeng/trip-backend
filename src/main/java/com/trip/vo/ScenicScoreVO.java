@@ -1,18 +1,38 @@
 package com.trip.vo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class ScenicScoreVO implements Serializable {
 
+    /**
+     * 景点id
+     */
     private Integer scenicId;
 
+    /**
+     * 评分
+     */
     private Integer score;
 
+    /**
+     * 评论
+     */
     private String comment;
 
+    /**
+     * 评分人
+     */
     private Integer userId;
 
+    /**
+     * 添加时间，自动生成
+     */
+    @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date addTime;
 
     private static final long serialVersionUID = 1L;
