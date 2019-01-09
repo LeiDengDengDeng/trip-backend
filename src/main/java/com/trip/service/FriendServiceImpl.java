@@ -1,10 +1,15 @@
 package com.trip.service;
 
 import com.trip.mapper.FriendMapper;
+import com.trip.mapper.UserMapper;
 import com.trip.vo.FriendVO;
 import com.trip.vo.ResponseVO;
+import com.trip.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by cong on 2018-12-30.
@@ -14,6 +19,9 @@ public class FriendServiceImpl implements FriendService{
 
     @Autowired
     private FriendMapper friendMapper;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public ResponseVO addFriend(FriendVO friendVO) {
@@ -26,17 +34,32 @@ public class FriendServiceImpl implements FriendService{
 
     @Override
     public ResponseVO getAllFriend(Integer userId) {
-        return ResponseVO.buildSuccess(friendMapper.selectAll(userId));
+        List<Integer> friendIds=friendMapper.selectAll(userId);
+        List<UserVO> friends = getUserVOList(friendIds);
+        return ResponseVO.buildSuccess(friends);
+    }
+
+    private List<UserVO> getUserVOList(List<Integer> friendIds) {
+        List<UserVO> friends=new ArrayList<>();
+        for(Integer friendId:friendIds){
+            UserVO friend=userMapper.selectUserInfoById(friendId);
+            if(friend!=null){
+                friends.add(friend);
+            }
+        }
+        return friends;
     }
 
     @Override
     public ResponseVO getFriendByName(Integer userId, String name) {
-        return ResponseVO.buildSuccess(friendMapper.selectByName(userId,name));
+        List<Integer> friendIds=friendMapper.selectByName(userId,name);
+        return ResponseVO.buildSuccess(getUserVOList(friendIds));
     }
 
     @Override
     public ResponseVO getFollower(Integer friendId) {
-        return ResponseVO.buildSuccess(friendMapper.selectByFriend(friendId));
+        List<Integer> followerIds=friendMapper.selectByFriend(friendId);
+        return ResponseVO.buildSuccess(getUserVOList(followerIds));
     }
 
     @Override
