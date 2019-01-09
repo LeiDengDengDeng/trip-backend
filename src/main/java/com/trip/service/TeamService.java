@@ -14,4 +14,10 @@ public interface TeamService {
      * @return
      */
     ResponseVO establishTeam(TeamVO teamVO);
+
+    /**
+     * 所有队伍
+     * @return
+     */
+    ResponseVO getAllTeams();
 }

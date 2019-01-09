@@ -7,4 +7,11 @@
         values (#{name},#{establishTime},#{minimumLimit},#{maximumLimit},#{startTime},#{endTime},#{scenicId})
     </insert>
 
+    <select id="selectAllTeams" resultType="com.trip.vo.TeamInfoVO">
+        select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
+       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,
+       t.scenic_id as scenicId,count(*) as memberNum
+        from team t,team_member tm where t.id = tm.team_id group by t.id
+    </select>
+
 </mapper>

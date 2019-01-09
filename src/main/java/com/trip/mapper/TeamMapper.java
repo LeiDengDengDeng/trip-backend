@@ -1,7 +1,10 @@
 package com.trip.mapper;
 
+import com.trip.vo.TeamInfoVO;
 import com.trip.vo.TeamVO;
 import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * @author fjj
@@ -16,4 +19,10 @@ public interface TeamMapper {
      * @return
      */
     int insertTeam(TeamVO teamVO);
+
+    /**
+     * 找出所有队伍
+     * @return
+     */
+    List<TeamInfoVO> selectAllTeams();
 }

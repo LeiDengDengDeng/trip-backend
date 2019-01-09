@@ -4,10 +4,10 @@ import lombok.Data;
 
 /**
  * @author fjj
- * @date 2019/1/7 下午1:09
+ * @date 2019/1/9 7:38 PM
  */
 @Data
-public class TeamVO {
+public class TeamInfoVO {
     private Integer id;
     private String name;
     private Long establishTime;
@@ -16,8 +16,9 @@ public class TeamVO {
     private Long startTime;
     private Long endTime;
     private Integer scenicId;
+
     /**
-     * 创建者id
+     * 当前队伍人数
      */
-    private Integer leaderId;
+    private Integer memberNum;
 }

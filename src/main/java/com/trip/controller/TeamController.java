@@ -1,6 +1,7 @@
 package com.trip.controller;
 
 import com.trip.service.TeamService;
+import com.trip.vo.FriendVO;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.TeamVO;
 import com.trip.vo.UserVO;
@@ -22,5 +23,10 @@ public class TeamController {
     @RequestMapping(value = "team/establish",method = RequestMethod.POST)
     public ResponseVO establishTeam(@RequestBody TeamVO teamVO){
         return teamService.establishTeam(teamVO);
+    }
+
+    @RequestMapping(value = "team/all",method = RequestMethod.GET)
+    public ResponseVO getAllTeams(){
+        return teamService.getAllTeams();
     }
 }
