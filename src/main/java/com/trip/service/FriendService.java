@@ -30,4 +30,17 @@ public interface FriendService {
      */
     public ResponseVO getFriendByName(Integer userId,String name);
 
+    /**
+     * 获取所有关注friendId的人
+     * @param friendId
+     * @return
+     */
+    public ResponseVO getFollower(Integer friendId);
+
+    /**
+     * 删除好友
+     * @param friendVO
+     * @return
+     */
+    public ResponseVO deleteFriend(FriendVO friendVO);
 }

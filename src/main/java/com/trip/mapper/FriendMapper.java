@@ -19,6 +19,9 @@ public interface FriendMapper {
 
     public List<Integer> selectAll(Integer userId);
 
+    public List<Integer> selectByFriend(Integer friendId);
+
     public List<Integer> selectByName(@Param("userId")Integer userId,@Param("friendName")String friendName);
 
+    public void deleteFriend(FriendVO friendVO);
 }

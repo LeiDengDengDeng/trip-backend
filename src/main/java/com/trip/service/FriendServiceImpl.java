@@ -33,4 +33,15 @@ public class FriendServiceImpl implements FriendService{
     public ResponseVO getFriendByName(Integer userId, String name) {
         return ResponseVO.buildSuccess(friendMapper.selectByName(userId,name));
     }
+
+    @Override
+    public ResponseVO getFollower(Integer friendId) {
+        return ResponseVO.buildSuccess(friendMapper.selectByFriend(friendId));
+    }
+
+    @Override
+    public ResponseVO deleteFriend(FriendVO friendVO) {
+        friendMapper.deleteFriend(friendVO);
+        return ResponseVO.buildSuccess();
+    }
 }
