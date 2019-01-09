@@ -3,6 +3,7 @@ package com.trip.service;
 import com.trip.enumeration.TeamIdentity;
 import com.trip.mapper.TeamMapper;
 import com.trip.mapper.TeamMemberMapper;
+import com.trip.vo.JoinTeamVO;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,5 +37,16 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseVO getAllTeams() {
         return ResponseVO.buildSuccess(teamMapper.selectAllTeams());
+    }
+
+    @Override
+    public ResponseVO getAllMembersByTeamId(int teamId) {
+        return ResponseVO.buildSuccess(teamMemberMapper.selectMemberByTeamId(teamId));
+    }
+
+    @Override
+    public ResponseVO joinTeam(JoinTeamVO joinTeamVO) {
+        return ResponseVO.buildSuccess(teamMemberMapper.insertTeamMember(joinTeamVO.getTeamId(),
+                joinTeamVO.getUserId(),TeamIdentity.MEMBER));
     }
 }

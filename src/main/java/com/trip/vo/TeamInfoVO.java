@@ -21,4 +21,8 @@ public class TeamInfoVO {
      * 当前队伍人数
      */
     private Integer memberNum;
+    /**
+     * 景点名称
+     */
+    private String scenicName;
 }

@@ -5,4 +5,10 @@
         insert into team_member(team_id, user_id, team_identity)
         values(#{teamId},#{userId},#{teamIdentity})
      </insert>
+
+    <select id="selectMemberByTeamId" resultType="com.trip.vo.TeamMemberVO">
+        select u.*,tm.team_identity as teamIdentity
+        from user u,team_member tm
+        where u.id = tm.user_id and tm.team_id = #{teamId}
+    </select>
 </mapper>

@@ -1,15 +1,9 @@
 package com.trip.controller;
 
 import com.trip.service.TeamService;
-import com.trip.vo.FriendVO;
-import com.trip.vo.ResponseVO;
-import com.trip.vo.TeamVO;
-import com.trip.vo.UserVO;
+import com.trip.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author fjj
@@ -29,4 +23,18 @@ public class TeamController {
     public ResponseVO getAllTeams(){
         return teamService.getAllTeams();
     }
+
+    @RequestMapping(value = "team/member/{teamId}",method = RequestMethod.GET)
+    public ResponseVO getAllTeams(@PathVariable int teamId){
+        return teamService.getAllMembersByTeamId(teamId);
+    }
+
+    @RequestMapping(value = "team/join",method = RequestMethod.POST)
+    public ResponseVO joinTeam(@RequestBody JoinTeamVO joinTeamVO){
+        return teamService.joinTeam(joinTeamVO);
+    }
+
+
+
+
 }

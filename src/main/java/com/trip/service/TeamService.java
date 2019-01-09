@@ -1,5 +1,6 @@
 package com.trip.service;
 
+import com.trip.vo.JoinTeamVO;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.TeamVO;
 
@@ -20,4 +21,8 @@ public interface TeamService {
      * @return
      */
     ResponseVO getAllTeams();
+
+    ResponseVO getAllMembersByTeamId(int teamId);
+
+    ResponseVO joinTeam(JoinTeamVO joinTeamVO);
 }
