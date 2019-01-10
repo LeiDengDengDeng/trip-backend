@@ -6,6 +6,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 
+/**
+ * 景点评分
+ */
 public class ScenicScoreVO implements Serializable {
 
     /**

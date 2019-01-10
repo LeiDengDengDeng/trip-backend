@@ -44,7 +44,13 @@ public class ScenicScoreServiceImpl implements ScenicScoreService{
         for(ScenicScoreVO scoreVO:list){
             sum+=scoreVO.getScore();
         }
-        ScenicScoreMetrixVO metrixVO=new ScenicScoreMetrixVO(count,sum/(double)count);
+        ScenicScoreMetrixVO metrixVO;
+        if(count!=0){
+            metrixVO=new ScenicScoreMetrixVO(count,sum/(double)count);
+        }else {
+            metrixVO=new ScenicScoreMetrixVO(0,0);
+        }
+
         return metrixVO;
     }
 }
