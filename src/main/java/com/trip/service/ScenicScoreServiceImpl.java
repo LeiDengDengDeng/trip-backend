@@ -20,7 +20,9 @@ public class ScenicScoreServiceImpl implements ScenicScoreService{
 
     @Override
     public ResponseVO addScore(ScenicScoreVO scoreVO) {
-        //TODO 校验
+        ScenicScoreVO scoreInDb=mapper.selectScore(scoreVO.getScenicId(),scoreVO.getUserId());
+        if(scoreInDb!=null)
+            return ResponseVO.buildFailure("景点已评论,请勿重复评论");
         mapper.insertSelective(scoreVO);
         return ResponseVO.buildSuccess();
     }
