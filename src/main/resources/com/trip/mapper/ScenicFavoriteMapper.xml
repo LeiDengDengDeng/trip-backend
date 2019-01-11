@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trip.mapper.ScenicFavoriteMapper">
+    <insert id="insert" parameterType="com.trip.vo.ScenicFavoriteVO">
+      INSERT INTO scenic_favorite(user_id,scenic_id)
+      VALUES (#{userId},#{scenicId})
+    </insert>
+
+    <select id="selectByUser" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT scenic_id from scenic_favorite WHERE user_id=#{userId}
+    </select>
+
+    <select id="select"  resultType="java.lang.Integer">
+        SELECT scenic_id from scenic_favorite WHERE user_id=#{userId} and scenic_id=#{scenicId}
+    </select>
+
+    <delete id="delete" parameterType="com.trip.vo.ScenicFavoriteVO">
+        DELETE FROM scenic_favorite WHERE user_id=#{userId} AND scenic_id=#{scenicId}
+    </delete>
+</mapper>
