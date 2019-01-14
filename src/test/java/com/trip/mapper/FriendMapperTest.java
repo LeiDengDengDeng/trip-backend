@@ -32,4 +32,12 @@ public class FriendMapperTest {
         System.out.println(friendMapper.selectByName(2,"c"));
     }
 
+    @Test
+    public void delete(){
+        FriendVO friendVO=new FriendVO();
+        friendVO.setUserId(2);
+        friendVO.setFriendId(1);
+        friendMapper.deleteFriend(friendVO);
+    }
+
 }

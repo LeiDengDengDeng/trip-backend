@@ -16,6 +16,11 @@
     SELECT <include refid="Base_Column_List"/> FROM scenic_score WHERE scenic_id=#{scenicId}
   </select>
 
+  <select id="selectScore"  resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM scenic_score WHERE scenic_id=#{scenicId} AND user_id=#{userId}
+  </select>
+
   <insert id="insertSelective" parameterType="com.trip.vo.ScenicScoreVO">
     insert into scenic_score
     <trim prefix="(" suffix=")" suffixOverrides=",">

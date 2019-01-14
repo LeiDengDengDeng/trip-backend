@@ -20,7 +20,9 @@ public class ScenicScoreServiceImpl implements ScenicScoreService{
 
     @Override
     public ResponseVO addScore(ScenicScoreVO scoreVO) {
-        //TODO 校验
+        ScenicScoreVO scoreInDb=mapper.selectScore(scoreVO.getScenicId(),scoreVO.getUserId());
+        if(scoreInDb!=null)
+            return ResponseVO.buildFailure("景点已评论,请勿重复评论");
         mapper.insertSelective(scoreVO);
         return ResponseVO.buildSuccess();
     }
@@ -44,7 +46,13 @@ public class ScenicScoreServiceImpl implements ScenicScoreService{
         for(ScenicScoreVO scoreVO:list){
             sum+=scoreVO.getScore();
         }
-        ScenicScoreMetrixVO metrixVO=new ScenicScoreMetrixVO(count,sum/(double)count);
+        ScenicScoreMetrixVO metrixVO;
+        if(count!=0){
+            metrixVO=new ScenicScoreMetrixVO(count,sum/(double)count);
+        }else {
+            metrixVO=new ScenicScoreMetrixVO(0,0);
+        }
+
         return metrixVO;
     }
 }

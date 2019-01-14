@@ -46,6 +46,27 @@ public class FriendController {
         return friendService.getFriendByName(userId,name);
     }
 
+    /**
+     * 获取所有关注friendId的人
+     * @param friendId
+     * @return
+     */
+    @RequestMapping(value = "/friend/followers/{friendId}",method = RequestMethod.GET)
+    public ResponseVO getFollower(@PathVariable Integer friendId){
+        return friendService.getFollower(friendId);
+    }
+
+    /**
+     * 删除好友
+     * 需要传入userId和friendId
+     * @param friendVO
+     * @return
+     */
+    @RequestMapping(value = "/friend/delete",method = RequestMethod.POST)
+    public ResponseVO deleteFriend(@RequestBody FriendVO friendVO){
+        return friendService.deleteFriend(friendVO);
+    }
+
 
 
 }
