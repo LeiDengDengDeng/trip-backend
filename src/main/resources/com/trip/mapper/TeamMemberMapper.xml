@@ -11,4 +11,8 @@
         from user u,team_member tm
         where u.id = tm.user_id and tm.team_id = #{teamId}
     </select>
+
+    <select id="selectMemberNumOfTeam">
+        select count(*) from team_member where team_id = #{teamId}
+    </select>
 </mapper>

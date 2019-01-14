@@ -14,4 +14,11 @@
         from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id group by t.id
     </select>
 
+    <select id="selectTeamById" resultType="com.trip.vo.TeamInfoVO">
+        select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
+       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,
+       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName
+        from team t,team_member tm,scenic s where t.id = tm.team_id and t.id = #{teamId} and s.id = t.scenic_id group by t.id
+    </select>
+
 </mapper>

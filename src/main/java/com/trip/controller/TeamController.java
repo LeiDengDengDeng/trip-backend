@@ -24,6 +24,11 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
+    @RequestMapping(value = "team/{teamId}",method = RequestMethod.GET)
+    public ResponseVO getTeamById(@PathVariable int teamId){
+        return teamService.getTeamById(teamId);
+    }
+
     @RequestMapping(value = "team/member/{teamId}",method = RequestMethod.GET)
     public ResponseVO getAllTeams(@PathVariable int teamId){
         return teamService.getAllMembersByTeamId(teamId);

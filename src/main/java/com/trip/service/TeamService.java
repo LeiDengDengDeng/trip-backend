@@ -25,4 +25,6 @@ public interface TeamService {
     ResponseVO getAllMembersByTeamId(int teamId);
 
     ResponseVO joinTeam(JoinTeamVO joinTeamVO);
+
+    ResponseVO getTeamById(int teamId);
 }

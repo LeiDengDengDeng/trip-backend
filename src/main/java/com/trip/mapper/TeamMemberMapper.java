@@ -16,4 +16,6 @@ public interface TeamMemberMapper {
     int insertTeamMember(@Param("teamId") int teamId, @Param("userId") int userId, @Param("teamIdentity") TeamIdentity teamIdentity);
 
     List<TeamMemberVO> selectMemberByTeamId(int teamId);
+
+    int selectMemberNumOfTeam(int teamId);
 }

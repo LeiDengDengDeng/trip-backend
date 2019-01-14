@@ -5,6 +5,7 @@ import com.trip.mapper.TeamMapper;
 import com.trip.mapper.TeamMemberMapper;
 import com.trip.vo.JoinTeamVO;
 import com.trip.vo.ResponseVO;
+import com.trip.vo.TeamInfoVO;
 import com.trip.vo.TeamVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,23 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ResponseVO joinTeam(JoinTeamVO joinTeamVO) {
-        return ResponseVO.buildSuccess(teamMemberMapper.insertTeamMember(joinTeamVO.getTeamId(),
-                joinTeamVO.getUserId(),TeamIdentity.MEMBER));
+        TeamInfoVO teamInfoVO = teamMapper.selectTeamById(joinTeamVO.getTeamId());
+        boolean canJoin = true;
+        if(teamInfoVO.getMaximumLimit() != null){
+            if(teamInfoVO.getMemberNum() >= teamInfoVO.getMaximumLimit()){
+                canJoin = false;
+            }
+        }
+        if(canJoin){
+            return ResponseVO.buildSuccess(teamMemberMapper.insertTeamMember(joinTeamVO.getTeamId(),
+                    joinTeamVO.getUserId(),TeamIdentity.MEMBER));
+        }else {
+            return ResponseVO.buildFailure("该队伍已达最大人数，无法加入");
+        }
+    }
+
+    @Override
+    public ResponseVO getTeamById(int teamId) {
+        return ResponseVO.buildSuccess(teamMapper.selectTeamById(teamId));
     }
 }

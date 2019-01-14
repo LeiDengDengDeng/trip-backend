@@ -1,5 +1,6 @@
 package com.trip.mapper;
 
+import com.trip.vo.JoinTeamVO;
 import com.trip.vo.TeamInfoVO;
 import com.trip.vo.TeamVO;
 import org.apache.ibatis.annotations.Mapper;
@@ -25,4 +26,9 @@ public interface TeamMapper {
      * @return
      */
     List<TeamInfoVO> selectAllTeams();
+
+    /**
+     * 根据teamid查找队伍信息
+     */
+    TeamInfoVO selectTeamById(int teamId);
 }

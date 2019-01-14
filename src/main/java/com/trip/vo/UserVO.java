@@ -10,8 +10,9 @@ import java.util.Date;
  * @date 2019/1/2 下午11:42
  */
 public class UserVO {
+    // 用户Id
     private Integer id;
-    // 微信ID
+    // username相当于微信Id
     private String username;
     // 微信昵称
     private String nickname;
