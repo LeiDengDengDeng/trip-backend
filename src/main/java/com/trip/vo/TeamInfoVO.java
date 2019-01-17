@@ -16,6 +16,8 @@ public class TeamInfoVO {
     private Long startTime;
     private Long endTime;
     private Integer scenicId;
+    private String intro;
+    private Double average;
 
     /**
      * 当前队伍人数
@@ -25,4 +27,8 @@ public class TeamInfoVO {
      * 景点名称
      */
     private String scenicName;
+    /**
+     * 景点图片
+     */
+    private String scenicPicUrl;
 }

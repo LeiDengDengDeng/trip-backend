@@ -19,9 +19,24 @@ public class TeamController {
         return teamService.establishTeam(teamVO);
     }
 
+    @RequestMapping(value = "team/update",method = RequestMethod.POST)
+    public ResponseVO updateTeam(@RequestBody TeamVO teamVO){
+        return teamService.updateTeam(teamVO);
+    }
+
     @RequestMapping(value = "team/all",method = RequestMethod.GET)
     public ResponseVO getAllTeams(){
         return teamService.getAllTeams();
+    }
+
+    @RequestMapping(value = "team/my/established/{userId}",method = RequestMethod.GET)
+    public ResponseVO getMyEstablishedTeam(@PathVariable int userId){
+        return teamService.getMyEstablishedTeam(userId);
+    }
+
+    @RequestMapping(value = "team/my/joined/{userId}",method = RequestMethod.GET)
+    public ResponseVO getMyJoinedTeam(@PathVariable int userId){
+        return teamService.getMyJoinedTeam(userId);
     }
 
     @RequestMapping(value = "team/{teamId}",method = RequestMethod.GET)

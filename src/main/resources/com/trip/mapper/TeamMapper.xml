@@ -3,22 +3,79 @@
 <mapper namespace="com.trip.mapper.TeamMapper">
     <insert id="insertTeam" parameterType="com.trip.vo.TeamVO"
             useGeneratedKeys="true" keyProperty="id">
-        insert into team(name,establish_time,minimum_limit,maximum_limit,start_time,end_time,scenic_id)
-        values (#{name},#{establishTime},#{minimumLimit},#{maximumLimit},#{startTime},#{endTime},#{scenicId})
+        insert into team(name,establish_time,minimum_limit,maximum_limit,start_time,end_time,scenic_id,intro,average)
+        values (#{name},#{establishTime},#{minimumLimit},#{maximumLimit},#{startTime},#{endTime},#{scenicId},#{intro},#{average})
     </insert>
 
     <select id="selectAllTeams" resultType="com.trip.vo.TeamInfoVO">
         select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
-       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,
-       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName
+       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,
+       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl
         from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id group by t.id
     </select>
 
     <select id="selectTeamById" resultType="com.trip.vo.TeamInfoVO">
         select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
-       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,
-       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName
+       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,
+       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl
         from team t,team_member tm,scenic s where t.id = tm.team_id and t.id = #{teamId} and s.id = t.scenic_id group by t.id
     </select>
+
+    <update id="updateTeam" parameterType="com.trip.vo.TeamVO">
+        update team
+        <set>
+            <if test="name != null">
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="minimumLimit != null">
+                minimum_limit = #{minimumLimit,jdbcType=INTEGER},
+            </if>
+            <if test="maximumLimit != null">
+                maximum_limit = #{maximumLimit,jdbcType=INTEGER},
+            </if>
+            <if test="startTime != null">
+                start_time = #{startTime,jdbcType=INTEGER},
+            </if>
+            <if test="endTime != null">
+                end_time = #{endTime,jdbcType=INTEGER},
+            </if>
+            <if test="scenicId != null">
+                scenic_id = #{scenicId,jdbcType=INTEGER},
+            </if>
+            <if test="intro != null">
+                intro = #{intro,jdbcType=VARCHAR},
+            </if>
+            <if test="average != null">
+                average = #{average,jdbcType=DOUBLE},
+            </if>
+        </set>
+        where id = #{id,jdbcType=INTEGER}
+    </update>
+
+    <select id="selectBatchOfTeamByIds" resultType="com.trip.vo.TeamInfoVO">
+        select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
+        t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,
+        t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl
+        from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id
+        and t.id in
+        <foreach collection="list" index="index" item="item" open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+        group by t.id
+    </select>
+
+    <!--<select id="selectTeamsByLeaderId" resultType="com.trip.vo.TeamInfoVO">-->
+        <!--select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,-->
+       <!--t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,-->
+       <!--t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl-->
+        <!--from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id and tm.user_id = #{userId} and tm.team_identity = "LEADER" group by t.id-->
+    <!--</select>-->
+
+    <!--<select id="selectTeamsByMemberId" resultType="com.trip.vo.TeamInfoVO">-->
+        <!--select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,-->
+       <!--t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,-->
+       <!--t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl-->
+        <!--from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id and tm.user_id = #{userId} and tm.team_identity = "MEMBER" group by t.id-->
+    <!--</select>-->
 
 </mapper>

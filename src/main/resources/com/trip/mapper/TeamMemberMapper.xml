@@ -15,4 +15,7 @@
     <select id="selectMemberNumOfTeam">
         select count(*) from team_member where team_id = #{teamId}
     </select>
+    <select id="selectTeamIdsByUserIdAndIdentity" resultType="Integer">
+        select team_id from team_member where user_id = #{userId} and team_identity = #{teamIdentity}
+    </select>
 </mapper>

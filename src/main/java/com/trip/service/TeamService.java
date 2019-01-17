@@ -27,4 +27,10 @@ public interface TeamService {
     ResponseVO joinTeam(JoinTeamVO joinTeamVO);
 
     ResponseVO getTeamById(int teamId);
+
+    ResponseVO updateTeam(TeamVO teamVO);
+
+    ResponseVO getMyEstablishedTeam(int userId);
+
+    ResponseVO getMyJoinedTeam(int userId);
 }

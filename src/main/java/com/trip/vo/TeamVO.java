@@ -26,4 +26,8 @@ public class TeamVO {
     private Integer scenicId;
     // 创建者id
     private Integer leaderId;
+    //简介
+    private String intro;
+    //人均
+    private double average;
 }

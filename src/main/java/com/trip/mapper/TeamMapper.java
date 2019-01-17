@@ -31,4 +31,12 @@ public interface TeamMapper {
      * 根据teamid查找队伍信息
      */
     TeamInfoVO selectTeamById(int teamId);
+
+    int updateTeam(TeamVO teamVO);
+
+//    List<TeamInfoVO> selectTeamsByLeaderId(int userId);
+
+//    List<TeamInfoVO> selectTeamsByMemberId(int userId);
+
+    List<TeamInfoVO> selectBatchOfTeamByIds(List<Integer> teamIds);
 }

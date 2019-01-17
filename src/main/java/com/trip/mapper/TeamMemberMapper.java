@@ -18,4 +18,6 @@ public interface TeamMemberMapper {
     List<TeamMemberVO> selectMemberByTeamId(int teamId);
 
     int selectMemberNumOfTeam(int teamId);
+
+    List<Integer> selectTeamIdsByUserIdAndIdentity(@Param("userId") int  userId,@Param("teamIdentity") TeamIdentity teamIdentity);
 }

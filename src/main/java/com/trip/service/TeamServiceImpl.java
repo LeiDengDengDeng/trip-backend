@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 /**
  * @author fjj
  * @date 2019/1/7 下午1:14
@@ -65,5 +67,25 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseVO getTeamById(int teamId) {
         return ResponseVO.buildSuccess(teamMapper.selectTeamById(teamId));
+    }
+
+    @Override
+    public ResponseVO updateTeam(TeamVO teamVO) {
+        if(teamMapper.selectTeamById(teamVO.getId()) == null){
+            return ResponseVO.buildFailure("不存在此队伍");
+        }
+        return ResponseVO.buildSuccess(teamMapper.updateTeam(teamVO));
+    }
+
+    @Override
+    public ResponseVO getMyEstablishedTeam(int userId) {
+        List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(userId,TeamIdentity.LEADER);
+        return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
+    }
+
+    @Override
+    public ResponseVO getMyJoinedTeam(int userId) {
+       List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(userId,TeamIdentity.MEMBER);
+       return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
     }
 }
