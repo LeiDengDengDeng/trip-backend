@@ -3,6 +3,7 @@ package com.trip.service;
 import com.trip.enumeration.TeamIdentity;
 import com.trip.mapper.TeamMapper;
 import com.trip.mapper.TeamMemberMapper;
+import com.trip.mapper.UserMapper;
 import com.trip.vo.JoinTeamVO;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.TeamInfoVO;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,6 +27,8 @@ public class TeamServiceImpl implements TeamService {
     private TeamMapper teamMapper;
     @Autowired
     private TeamMemberMapper teamMemberMapper;
+    @Autowired
+    private UserMapper userMapper;
 
     @Override
     public ResponseVO establishTeam(TeamVO teamVO) {
@@ -44,12 +48,21 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ResponseVO getAllMembersByTeamId(int teamId) {
+        if(teamMapper.selectTeamById(teamId) == null){
+            return ResponseVO.buildFailure("不存在该队伍");
+        }
         return ResponseVO.buildSuccess(teamMemberMapper.selectMemberByTeamId(teamId));
     }
 
     @Override
     public ResponseVO joinTeam(JoinTeamVO joinTeamVO) {
         TeamInfoVO teamInfoVO = teamMapper.selectTeamById(joinTeamVO.getTeamId());
+        if(teamInfoVO == null){
+            return ResponseVO.buildFailure("不存在该队伍");
+        }
+        if(userMapper.selectUserInfoById(joinTeamVO.getUserId()) == null){
+            return ResponseVO.buildFailure("不存在该用户");
+        }
         boolean canJoin = true;
         if(teamInfoVO.getMaximumLimit() != null){
             if(teamInfoVO.getMemberNum() >= teamInfoVO.getMaximumLimit()){
@@ -66,6 +79,9 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ResponseVO getTeamById(int teamId) {
+        if(teamMapper.selectTeamById(teamId) == null){
+            return ResponseVO.buildFailure("不存在该队伍");
+        }
         return ResponseVO.buildSuccess(teamMapper.selectTeamById(teamId));
     }
 
@@ -79,13 +95,23 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ResponseVO getMyEstablishedTeam(int userId) {
+        if(userMapper.selectUserInfoById(userId) == null){
+            return ResponseVO.buildFailure("不存在该用户");
+        }
         List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(userId,TeamIdentity.LEADER);
         return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
     }
 
     @Override
     public ResponseVO getMyJoinedTeam(int userId) {
-       List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(userId,TeamIdentity.MEMBER);
-       return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
+        if(userMapper.selectUserInfoById(userId) == null){
+            return ResponseVO.buildFailure("不存在该用户");
+        }
+
+        List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(userId,TeamIdentity.MEMBER);
+        if(teamIds.size() == 0){
+            return ResponseVO.buildSuccess(new ArrayList<TeamInfoVO>());
+        }
+        return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
     }
 }
