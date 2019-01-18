@@ -45,6 +45,15 @@
         select * from user where id = #{id}
     </select>
 
+    <select id="selectNewUserInfoById" resultType="com.trip.vo.UserInfoVO">
+        select distinct u.*,f_follow.followerNum,f_following.followingNum,favorite_scenic.favoriteScenicNum
+        from user u,friend f,
+            (select count(*) as followerNum from friend where friend_id = #{id}) as f_follow,
+            (select count(*) as followingNum from friend where user_id = #{id}) as f_following,
+            (select count(*) as favoriteScenicNum from scenic_favorite where user_id = #{id}) as favorite_scenic
+        where u.id = #{id};
+    </select>
+
     <select id="selectAllUsers" resultType="com.trip.vo.UserVO">
         select * from user;
     </select>
@@ -61,5 +70,8 @@
         select * from user where avatar = #{avatar}
     </select>
 
+    <select id="selectAllUserIds" resultType="Integer">
+        select id from user;
+    </select>
 
 </mapper>

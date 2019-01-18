@@ -4,11 +4,13 @@ import com.trip.enumeration.UserIdentity;
 import com.trip.enumeration.UserState;
 import com.trip.mapper.UserMapper;
 import com.trip.vo.ResponseVO;
+import com.trip.vo.UserInfoVO;
 import com.trip.vo.UserVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,14 +49,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ResponseVO getUser(int id) {
-        UserVO userInfo = userMapper.selectUserInfoById(id);
+        UserInfoVO userInfo = userMapper.selectNewUserInfoById(id);
         return ResponseVO.buildSuccess(userInfo);
     }
 
     @Override
     public ResponseVO getAllUsers() {
-        List<UserVO> allUsers = userMapper.selectAllUsers();
-        return ResponseVO.buildSuccess(allUsers);
+        return ResponseVO.buildSuccess(userMapper.selectAllUsers());
     }
 
     @Override

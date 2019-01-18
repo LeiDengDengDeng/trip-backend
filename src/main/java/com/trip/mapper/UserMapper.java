@@ -1,5 +1,6 @@
 package com.trip.mapper;
 
+import com.trip.vo.UserInfoVO;
 import com.trip.vo.UserVO;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -17,11 +18,16 @@ public interface UserMapper {
 
     UserVO selectUserInfoById(int id);
 
+    UserInfoVO selectNewUserInfoById(int id);
+
     List<UserVO> selectAllUsers();
+
+    List<Integer> selectAllUserIds();
 
     List<UserVO> selectUsersByState(String state);
 
     UserVO selectUserByUsername(String username);
 
     UserVO selectUserByAvatar(String avatar);
+
 }
