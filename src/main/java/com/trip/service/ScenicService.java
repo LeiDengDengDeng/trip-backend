@@ -4,6 +4,8 @@ import com.trip.vo.ResponseVO;
 import com.trip.vo.ScenicInfoVO;
 import com.trip.vo.ScenicVO;
 
+import java.util.List;
+
 /**
  * 景点信息管理
  * Created by cong on 2019-01-10.
@@ -16,6 +18,12 @@ public interface ScenicService {
      * @return
      */
     public ScenicInfoVO getScenic(Integer scenicId);
+
+    /**
+     * 获取所有景点
+     * @return
+     */
+    public List<ScenicInfoVO> getAllScenic();
 
     /**
      * 添加景点

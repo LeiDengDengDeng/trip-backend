@@ -9,6 +9,9 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by cong on 2019-01-10.
  */
@@ -25,13 +28,30 @@ public class ScenicServiceImpl implements ScenicService{
     public ScenicInfoVO getScenic(Integer scenicId) {
         //查询景点基本信息
         ScenicVO basicInfo=mapper.selectByPrimaryKey(scenicId);
+        return getDetail(basicInfo);
+    }
+
+    @Override
+    public List<ScenicInfoVO> getAllScenic() {
+        List<ScenicVO> scenics=mapper.selectAll();
+        List<ScenicInfoVO> result=new ArrayList<>();
+        for(ScenicVO scenic:scenics){
+            ScenicInfoVO detail=getDetail(scenic);
+            if(detail!=null){
+                result.add(detail);
+            }
+        }
+        return result;
+    }
+
+    private ScenicInfoVO getDetail(ScenicVO basicInfo){
         if(basicInfo==null)
             return null;
         ScenicInfoVO detail=new ScenicInfoVO();
         BeanUtils.copyProperties(basicInfo,detail);
 
         //查询评分
-        ScenicScoreMetrixVO scoreMetrix=scoreService.getMetrix(scenicId);
+        ScenicScoreMetrixVO scoreMetrix=scoreService.getMetrix(basicInfo.getId());
         detail.setStar(scoreMetrix.getAverage());
         detail.setCommentCount(scoreMetrix.getCount());
         return detail;

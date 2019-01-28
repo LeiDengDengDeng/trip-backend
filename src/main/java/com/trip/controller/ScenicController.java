@@ -7,6 +7,8 @@ import com.trip.vo.ScenicVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * Created by cong on 2019-01-10.
  */
@@ -27,6 +29,15 @@ public class ScenicController {
         if(info==null)
             return ResponseVO.buildFailure("景点信息不存在");
         return ResponseVO.buildSuccess(info);
+    }
+
+    /**
+     * 获取所有景点
+     * @return
+     */
+    @RequestMapping(value = "scenics",method = RequestMethod.GET)
+    public ResponseVO getAllScenic(){
+        return ResponseVO.buildSuccess(service.getAllScenic());
     }
 
     /**
