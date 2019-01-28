@@ -2,9 +2,11 @@ package com.trip.service;
 
 import com.trip.mapper.FriendMapper;
 import com.trip.mapper.UserMapper;
+import com.trip.vo.FollowerVO;
 import com.trip.vo.FriendVO;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.UserVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +61,19 @@ public class FriendServiceImpl implements FriendService{
     @Override
     public ResponseVO getFollower(Integer friendId) {
         List<Integer> followerIds=friendMapper.selectByFriend(friendId);
-        return ResponseVO.buildSuccess(getUserVOList(followerIds));
+        List<FollowerVO> followers=new ArrayList<>();
+        for(Integer followerId:followerIds){
+            UserVO followerInfo=userMapper.selectUserInfoById(followerId);
+            if(followerInfo==null)
+                continue;
+            FollowerVO followerVO=new FollowerVO();
+            BeanUtils.copyProperties(followerInfo,followerVO);
+
+            //查询我是否关注
+            followerVO.setHasFollowed(friendMapper.select(new FriendVO(friendId,followerInfo.getId()))!=null);
+            followers.add(followerVO);
+        }
+        return ResponseVO.buildSuccess(followers);
     }
 
     @Override
