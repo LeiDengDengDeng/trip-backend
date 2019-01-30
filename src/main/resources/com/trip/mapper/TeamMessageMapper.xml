@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trip.mapper.TeamMessageMapper">
+  <resultMap id="BaseResultMap" type="com.trip.vo.TeamMessageVO">
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="sender_id" jdbcType="INTEGER" property="senderId" />
+    <result column="message" jdbcType="VARCHAR" property="message" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    team_id, sender_id, message, add_time
+  </sql>
+
+  <insert id="insert" parameterType="com.trip.vo.TeamMessageVO">
+    insert into team_message (team_id, sender_id,
+      message)
+    values ( #{teamId,jdbcType=INTEGER}, #{senderId,jdbcType=INTEGER},
+      #{message,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="selectByTeam" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM team_message
+    WHERE team_id=#{teamId}
+  </select>
+
+
+</mapper>
