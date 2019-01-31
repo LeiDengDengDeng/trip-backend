@@ -24,11 +24,16 @@ public class ScenicServiceImpl implements ScenicService{
     @Autowired
     private ScenicScoreService scoreService;
 
+    @Autowired
+    private ScenicFavoriteService favoriteService;
+
     @Override
-    public ScenicInfoVO getScenic(Integer scenicId) {
+    public ScenicInfoVO getScenic(Integer scenicId,Integer userId) {
         //查询景点基本信息
         ScenicVO basicInfo=mapper.selectByPrimaryKey(scenicId);
-        return getDetail(basicInfo);
+        ScenicInfoVO detail=getDetail(basicInfo);
+        detail.setFavorite(favoriteService.isFavorite(userId,scenicId));
+        return detail;
     }
 
     @Override

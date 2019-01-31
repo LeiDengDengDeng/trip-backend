@@ -23,9 +23,9 @@ public class ScenicController {
      * @param scenicId
      * @return
      */
-    @RequestMapping(value = "/scenic/{scenicId}",method = RequestMethod.GET)
-    public ResponseVO getScenic(@PathVariable Integer scenicId){
-        ScenicInfoVO info=service.getScenic(scenicId);
+    @RequestMapping(value = "/scenic/{scenicId}/{userId}",method = RequestMethod.GET)
+    public ResponseVO getScenic(@PathVariable Integer scenicId,@PathVariable Integer userId){
+        ScenicInfoVO info=service.getScenic(scenicId,userId);
         if(info==null)
             return ResponseVO.buildFailure("景点信息不存在");
         return ResponseVO.buildSuccess(info);

@@ -30,4 +30,12 @@ public interface ScenicFavoriteService {
      */
     public ResponseVO deleteFavoriteScenic(ScenicFavoriteVO scenicFavoriteVO);
 
+    /**
+     * 是否已收藏
+     * @param userId
+     * @param scenicId
+     * @return
+     */
+    public boolean isFavorite(int userId,int scenicId);
+
 }

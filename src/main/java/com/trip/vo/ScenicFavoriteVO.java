@@ -16,6 +16,14 @@ public class ScenicFavoriteVO {
      */
     private Integer scenicId;
 
+    public ScenicFavoriteVO() {
+    }
+
+    public ScenicFavoriteVO(Integer userId, Integer scenicId) {
+        this.userId = userId;
+        this.scenicId = scenicId;
+    }
+
     public Integer getUserId() {
         return userId;
     }

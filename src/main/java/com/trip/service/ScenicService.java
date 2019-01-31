@@ -17,7 +17,7 @@ public interface ScenicService {
      * @param scenicId
      * @return
      */
-    public ScenicInfoVO getScenic(Integer scenicId);
+    public ScenicInfoVO getScenic(Integer scenicId,Integer userId);
 
     /**
      * 获取所有景点

@@ -15,6 +15,11 @@ public class ScenicInfoVO extends ScenicVO{
      */
     private int commentCount;
 
+    /**
+     * 是否已收藏
+     */
+    private boolean isFavorite;
+
     public double getStar() {
         return star;
     }
@@ -29,5 +34,13 @@ public class ScenicInfoVO extends ScenicVO{
 
     public void setCommentCount(int commentCount) {
         this.commentCount = commentCount;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        isFavorite = favorite;
     }
 }
