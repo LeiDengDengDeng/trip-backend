@@ -29,6 +29,11 @@ public class ScenicVO implements Serializable {
      */
     private Double longitude;
 
+    /**
+     * 景点名称的拼音大写
+     */
+    private String pinyin;
+
     private static final long serialVersionUID = 1L;
 
     public Integer getId() {
@@ -85,5 +90,13 @@ public class ScenicVO implements Serializable {
 
     public void setLongitude(Double longitude) {
         this.longitude = longitude;
+    }
+
+    public String getPinyin() {
+        return pinyin;
+    }
+
+    public void setPinyin(String pinyin) {
+        this.pinyin = pinyin;
     }
 }

@@ -27,7 +27,7 @@ public class ScenicFavoriteServiceImpl implements ScenicFavoriteService{
         List<Integer> scenicIdList=mapper.selectByUser(userId);
         List<ScenicInfoVO> scenicList=new ArrayList<>();
         for(Integer scenicId:scenicIdList){
-            ScenicInfoVO scenic=scenicService.getScenic(scenicId);
+            ScenicInfoVO scenic=scenicService.getScenic(scenicId,userId);
             if(scenic!=null){
                 scenicList.add(scenic);
             }
@@ -48,5 +48,11 @@ public class ScenicFavoriteServiceImpl implements ScenicFavoriteService{
     public ResponseVO deleteFavoriteScenic(ScenicFavoriteVO scenicFavoriteVO) {
         mapper.delete(scenicFavoriteVO);
         return ResponseVO.buildSuccess();
+    }
+
+    @Override
+    public boolean isFavorite(int userId, int scenicId) {
+        Integer scenicInDb=mapper.select(new ScenicFavoriteVO(userId,scenicId));
+        return scenicInDb!=null;
     }
 }

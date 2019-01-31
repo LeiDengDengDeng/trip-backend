@@ -8,6 +8,7 @@ import com.trip.vo.ScenicVO;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,6 +65,10 @@ public class ScenicServiceImpl implements ScenicService{
 
     @Override
     public ResponseVO addScenic(ScenicVO scenicVO) {
+        String pinyin=scenicVO.getPinyin();
+        if(!StringUtils.isEmpty(pinyin)){
+            scenicVO.setPinyin(pinyin.toUpperCase());
+        }
         mapper.insertSelective(scenicVO);
         return ResponseVO.buildSuccess();
     }
