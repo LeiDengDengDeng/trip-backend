@@ -2,6 +2,7 @@ package com.trip.mapper;
 
 import com.trip.vo.*;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -44,4 +45,11 @@ public interface TeamMapper {
     List<TeamInfoVO> selectBatchOfTeamByIds(List<Integer> teamIds);
 
     int deleteTeam(DisbandTeamVO disbandTeamVO);
+
+    /**
+     * 根据景点ID查找所有要去这个景点的队伍
+     * @param scenicId
+     * @return
+     */
+    List<TeamInfoVO> selectAllTeamsByScenicId(@Param("scenicId") int scenicId);
 }

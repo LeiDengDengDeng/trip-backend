@@ -34,6 +34,11 @@ public class TeamController {
         return teamService.getAllTeams();
     }
 
+    @RequestMapping(value = "team/all/{scenicId}",method = RequestMethod.GET)
+    public ResponseVO getAllTeamsByScenicId(@PathVariable int scenicId){
+        return teamService.getAllTeamsByScenicId(scenicId);
+    }
+
     @RequestMapping(value = "team/my/established/{userId}",method = RequestMethod.GET)
     public ResponseVO getMyEstablishedTeam(@PathVariable int userId){
         return teamService.getMyEstablishedTeam(userId);

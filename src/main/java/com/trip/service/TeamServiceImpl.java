@@ -159,4 +159,9 @@ public class TeamServiceImpl implements TeamService {
         return ResponseVO.buildSuccess();
 
     }
+
+    @Override
+    public ResponseVO getAllTeamsByScenicId(int scenicId) {
+        return ResponseVO.buildSuccess(teamMapper.selectAllTeamsByScenicId(scenicId));
+    }
 }

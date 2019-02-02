@@ -82,5 +82,11 @@
         delete from team where id=#{teamId}
     </delete>
 
+    <select id="selectAllTeamsByScenicId" resultType="com.trip.vo.TeamInfoVO">
+        select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
+        t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,
+        t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl
+        from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id and s.id=#{scenicId} group by t.id
+    </select>
 
 </mapper>

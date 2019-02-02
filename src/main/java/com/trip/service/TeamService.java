@@ -35,4 +35,6 @@ public interface TeamService {
     ResponseVO quitTeam(QuitTeamVO quitTeamVO);
 
     ResponseVO disbandTeam(DisbandTeamVO disbandTeamVO);
+
+    ResponseVO getAllTeamsByScenicId(int scenicId);
 }
