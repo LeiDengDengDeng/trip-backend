@@ -60,18 +60,23 @@ public class TeamServiceImpl implements TeamService {
         if(userMapper.selectUserInfoById(joinTeamVO.getUserId()) == null){
             return ResponseVO.buildFailure("不存在该用户");
         }
-        boolean canJoin = true;
         if(teamInfoVO.getMaximumLimit() != null){
+            // 最大人数限制
             if(teamInfoVO.getMemberNum() >= teamInfoVO.getMaximumLimit()){
-                canJoin = false;
+                return ResponseVO.buildFailure("该队伍已达最大人数，无法加入");
+            }
+            // 如果这个人已经在这个队伍中，也不可再加入
+            List<TeamMemberVO> teamMemberVOList = teamMemberMapper.selectMemberByTeamId(joinTeamVO.getTeamId());
+            for(TeamMemberVO teamMemberVO : teamMemberVOList){
+                if(teamMemberVO.getId().equals(joinTeamVO.getUserId())){
+                    return ResponseVO.buildFailure("已经在该队伍中，不可重复加入");
+                }
             }
         }
-        if(canJoin){
-            return ResponseVO.buildSuccess(teamMemberMapper.insertTeamMember(joinTeamVO.getTeamId(),
-                    joinTeamVO.getUserId(),TeamIdentity.MEMBER));
-        }else {
-            return ResponseVO.buildFailure("该队伍已达最大人数，无法加入");
-        }
+
+        return ResponseVO.buildSuccess(teamMemberMapper.insertTeamMember(joinTeamVO.getTeamId(),
+                joinTeamVO.getUserId(),TeamIdentity.MEMBER));
+
     }
 
     @Override
@@ -163,5 +168,11 @@ public class TeamServiceImpl implements TeamService {
     @Override
     public ResponseVO getAllTeamsByScenicId(int scenicId) {
         return ResponseVO.buildSuccess(teamMapper.selectAllTeamsByScenicId(scenicId));
+    }
+
+    @Override
+    public ResponseVO getAllTeamsCanJoin() {
+        long currentTime = System.currentTimeMillis() / 1000;
+        return ResponseVO.buildSuccess(teamMapper.selectAllTeamsCanJoin(currentTime));
     }
 }

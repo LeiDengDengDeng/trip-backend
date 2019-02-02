@@ -52,4 +52,6 @@ public interface TeamMapper {
      * @return
      */
     List<TeamInfoVO> selectAllTeamsByScenicId(@Param("scenicId") int scenicId);
+
+    List<TeamInfoVO> selectAllTeamsCanJoin(@Param("currentTime") long currentTime);
 }
