@@ -39,4 +39,6 @@ public interface TeamService {
     ResponseVO getAllTeamsByScenicId(int scenicId);
 
     ResponseVO getAllTeamsCanJoin();
+
+    ResponseVO getMyEstablishedTeamNew(EstablishedTeamVO establishedTeamVO);
 }

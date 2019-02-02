@@ -1,6 +1,7 @@
 package com.trip.service;
 
 import com.trip.enumeration.TeamIdentity;
+import com.trip.mapper.ScenicMapper;
 import com.trip.mapper.TeamMapper;
 import com.trip.mapper.TeamMemberMapper;
 import com.trip.mapper.UserMapper;
@@ -26,6 +27,8 @@ public class TeamServiceImpl implements TeamService {
     private TeamMemberMapper teamMemberMapper;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private ScenicMapper scenicMapper;
 
     @Override
     public ResponseVO establishTeam(TeamVO teamVO) {
@@ -101,7 +104,11 @@ public class TeamServiceImpl implements TeamService {
             return ResponseVO.buildFailure("不存在该用户");
         }
         List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(userId,TeamIdentity.LEADER);
-        return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
+        if(teamIds.size() == 0){
+            return ResponseVO.buildSuccess();
+        }else{
+            return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
+        }
     }
 
     @Override
@@ -167,7 +174,8 @@ public class TeamServiceImpl implements TeamService {
 
     @Override
     public ResponseVO getAllTeamsByScenicId(int scenicId) {
-        return ResponseVO.buildSuccess(teamMapper.selectAllTeamsByScenicId(scenicId));
+        long currentTime = System.currentTimeMillis() / 1000;
+        return ResponseVO.buildSuccess(teamMapper.selectAllTeamsByScenicId(scenicId, currentTime));
     }
 
     @Override
@@ -175,4 +183,28 @@ public class TeamServiceImpl implements TeamService {
         long currentTime = System.currentTimeMillis() / 1000;
         return ResponseVO.buildSuccess(teamMapper.selectAllTeamsCanJoin(currentTime));
     }
+
+    @Override
+    public ResponseVO getMyEstablishedTeamNew(EstablishedTeamVO establishedTeamVO) {
+        if(userMapper.selectUserInfoById(establishedTeamVO.getUserId()) == null){
+            return ResponseVO.buildFailure("不存在该用户");
+        }
+        if(scenicMapper.selectByPrimaryKey(establishedTeamVO.getScenicId()) == null){
+            return ResponseVO.buildFailure("不存在该景点");
+        }
+        List<Integer> teamIds = teamMemberMapper.selectTeamIdsByUserIdAndIdentity(establishedTeamVO.getUserId(),TeamIdentity.LEADER);
+        if(teamIds.size() == 0){
+            return ResponseVO.buildSuccess();
+        }else{
+            // 筛选符合景点要求的
+            List<TeamInfoVO> teamInfoVOS = new ArrayList<>();
+            List<TeamInfoVO> teams = teamMapper.selectBatchOfTeamByIds(teamIds);
+            for(TeamInfoVO team : teams){
+                if(team.getScenicId().equals(establishedTeamVO.getScenicId())){
+                    teamInfoVOS.add(team);
+                }
+            }
+            return ResponseVO.buildSuccess(teamInfoVOS);
+        }
+        }
 }

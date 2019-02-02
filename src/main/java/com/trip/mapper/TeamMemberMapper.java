@@ -1,6 +1,7 @@
 package com.trip.mapper;
 
 import com.trip.enumeration.TeamIdentity;
+import com.trip.vo.EstablishedTeamVO;
 import com.trip.vo.QuitTeamVO;
 import com.trip.vo.TeamMemberVO;
 import org.apache.ibatis.annotations.Mapper;

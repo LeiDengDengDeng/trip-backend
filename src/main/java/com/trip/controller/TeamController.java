@@ -49,6 +49,11 @@ public class TeamController {
         return teamService.getMyEstablishedTeam(userId);
     }
 
+    @RequestMapping(value = "team/my/established",method = RequestMethod.POST)
+    public ResponseVO getMyEstablishedTeamNew(@RequestBody EstablishedTeamVO establishedTeamVO){
+        return teamService.getMyEstablishedTeamNew(establishedTeamVO);
+    }
+
     @RequestMapping(value = "team/my/joined/{userId}",method = RequestMethod.GET)
     public ResponseVO getMyJoinedTeam(@PathVariable int userId){
         return teamService.getMyJoinedTeam(userId);

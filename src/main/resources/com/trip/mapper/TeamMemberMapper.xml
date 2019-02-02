@@ -26,4 +26,5 @@
     <select id="selectMemberIdentityByTeamIdAndUserId" resultType="com.trip.enumeration.TeamIdentity">
         select team_identity from team_member t where user_id=#{userId} and team_id=#{teamId}
     </select>
+
 </mapper>
