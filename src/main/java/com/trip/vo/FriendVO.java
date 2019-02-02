@@ -11,6 +11,14 @@ public class FriendVO {
 
     private String friendName;
 
+    public FriendVO(Integer userId, Integer friendId) {
+        this.userId = userId;
+        this.friendId = friendId;
+    }
+
+    public FriendVO() {
+    }
+
     public String getFriendName() {
         return friendName;
     }

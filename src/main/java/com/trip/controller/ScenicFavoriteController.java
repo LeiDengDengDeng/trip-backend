@@ -3,6 +3,7 @@ package com.trip.controller;
 import com.trip.service.ScenicFavoriteService;
 import com.trip.vo.ResponseVO;
 import com.trip.vo.ScenicFavoriteVO;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,5 +46,8 @@ public class ScenicFavoriteController {
         return service.deleteFavoriteScenic(scenicFavoriteVO);
     }
 
-
+    @RequestMapping(value = "/favorite/{userId}/{scenicId}")
+    public ResponseVO isFavorite(@PathVariable Integer userId,@PathVariable Integer scenicId){
+        return ResponseVO.buildSuccess(service.isFavorite(userId,scenicId));
+    }
 }

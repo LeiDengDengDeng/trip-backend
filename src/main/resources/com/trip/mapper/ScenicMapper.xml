@@ -11,8 +11,15 @@
     <result column="longitude" jdbcType="DOUBLE" property="longitude" />
   </resultMap>
   <sql id="Base_Column_List">
-    id, name, introduction, address, icon_url, latitude, longitude
+    id, pinyin,name, introduction, address, icon_url, latitude, longitude
   </sql>
+
+  <select id="selectAll" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from scenic
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
@@ -45,6 +52,9 @@
       <if test="longitude != null">
         longitude,
       </if>
+      <if test="pinyin != null">
+        pinyin,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="name != null">
@@ -64,6 +74,9 @@
       </if>
       <if test="longitude != null">
         #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="pinyin != null">
+        #{pinyin},
       </if>
     </trim>
   </insert>
@@ -87,6 +100,9 @@
       </if>
       <if test="longitude != null">
         longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="pinyin != null">
+        pinyin = #{pinyin},
       </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
