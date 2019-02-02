@@ -18,4 +18,12 @@
     <select id="selectTeamIdsByUserIdAndIdentity" resultType="Integer">
         select team_id from team_member where user_id = #{userId} and team_identity = #{teamIdentity}
     </select>
+
+    <delete id="deleteTeamMember" parameterType="com.trip.vo.QuitTeamVO">
+        delete from team_member where team_id = #{teamId} and user_id = #{userId}
+    </delete>
+
+    <select id="selectMemberIdentityByTeamIdAndUserId" resultType="com.trip.enumeration.TeamIdentity">
+        select team_identity from team_member t where user_id=#{userId} and team_id=#{teamId}
+    </select>
 </mapper>

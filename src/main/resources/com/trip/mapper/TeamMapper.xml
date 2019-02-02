@@ -78,4 +78,9 @@
         <!--from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id and tm.user_id = #{userId} and tm.team_identity = "MEMBER" group by t.id-->
     <!--</select>-->
 
+    <delete id="deleteTeam" parameterType="com.trip.vo.DisbandTeamVO">
+        delete from team where id=#{teamId}
+    </delete>
+
+
 </mapper>

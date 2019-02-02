@@ -1,8 +1,6 @@
 package com.trip.service;
 
-import com.trip.vo.JoinTeamVO;
-import com.trip.vo.ResponseVO;
-import com.trip.vo.TeamVO;
+import com.trip.vo.*;
 
 /**
  * @author fjj
@@ -33,4 +31,8 @@ public interface TeamService {
     ResponseVO getMyEstablishedTeam(int userId);
 
     ResponseVO getMyJoinedTeam(int userId);
+
+    ResponseVO quitTeam(QuitTeamVO quitTeamVO);
+
+    ResponseVO disbandTeam(DisbandTeamVO disbandTeamVO);
 }

@@ -1,8 +1,6 @@
 package com.trip.mapper;
 
-import com.trip.vo.JoinTeamVO;
-import com.trip.vo.TeamInfoVO;
-import com.trip.vo.TeamVO;
+import com.trip.vo.*;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
@@ -38,5 +36,12 @@ public interface TeamMapper {
 
 //    List<TeamInfoVO> selectTeamsByMemberId(int userId);
 
+    /**
+     * 批量查询队伍信息
+     * @param teamIds
+     * @return
+     */
     List<TeamInfoVO> selectBatchOfTeamByIds(List<Integer> teamIds);
+
+    int deleteTeam(DisbandTeamVO disbandTeamVO);
 }

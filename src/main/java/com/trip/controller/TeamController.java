@@ -19,6 +19,11 @@ public class TeamController {
         return teamService.establishTeam(teamVO);
     }
 
+    @RequestMapping(value = "team/quit",method = RequestMethod.POST)
+    public ResponseVO quitTeam(@RequestBody QuitTeamVO quitTeamVO){
+        return teamService.quitTeam(quitTeamVO);
+    }
+
     @RequestMapping(value = "team/update",method = RequestMethod.POST)
     public ResponseVO updateTeam(@RequestBody TeamVO teamVO){
         return teamService.updateTeam(teamVO);
@@ -52,6 +57,11 @@ public class TeamController {
     @RequestMapping(value = "team/join",method = RequestMethod.POST)
     public ResponseVO joinTeam(@RequestBody JoinTeamVO joinTeamVO){
         return teamService.joinTeam(joinTeamVO);
+    }
+
+    @RequestMapping(value = "team/disband",method = RequestMethod.POST)
+    public ResponseVO joinTeam(@RequestBody DisbandTeamVO disbandTeamVO){
+        return teamService.disbandTeam(disbandTeamVO);
     }
 
 

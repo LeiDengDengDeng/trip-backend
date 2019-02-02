@@ -4,10 +4,7 @@ import com.trip.enumeration.TeamIdentity;
 import com.trip.mapper.TeamMapper;
 import com.trip.mapper.TeamMemberMapper;
 import com.trip.mapper.UserMapper;
-import com.trip.vo.JoinTeamVO;
-import com.trip.vo.ResponseVO;
-import com.trip.vo.TeamInfoVO;
-import com.trip.vo.TeamVO;
+import com.trip.vo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -113,5 +110,53 @@ public class TeamServiceImpl implements TeamService {
             return ResponseVO.buildSuccess(new ArrayList<TeamInfoVO>());
         }
         return ResponseVO.buildSuccess(teamMapper.selectBatchOfTeamByIds(teamIds));
+    }
+
+    @Override
+    public ResponseVO quitTeam(QuitTeamVO quitTeamVO) {
+        TeamInfoVO teamInfoVO = teamMapper.selectTeamById(quitTeamVO.getTeamId());
+        if(teamInfoVO == null){
+            return ResponseVO.buildFailure("不存在该队伍");
+        }
+        if(userMapper.selectUserInfoById(quitTeamVO.getUserId()) == null) {
+            return ResponseVO.buildFailure("不存在该用户");
+        }
+        TeamIdentity teamIdentity = teamMemberMapper.selectMemberIdentityByTeamIdAndUserId(quitTeamVO.getTeamId(),quitTeamVO.getUserId());
+        if(teamIdentity == null){
+            return ResponseVO.buildFailure("该队伍中不存在该用户");
+        }
+        return ResponseVO.buildSuccess(teamMemberMapper.deleteTeamMember(quitTeamVO));
+    }
+
+    @Override
+    public ResponseVO disbandTeam(DisbandTeamVO disbandTeamVO) {
+        TeamInfoVO teamInfoVO = teamMapper.selectTeamById(disbandTeamVO.getTeamId());
+        if(teamInfoVO == null){
+            return ResponseVO.buildFailure("不存在该队伍");
+        }
+        if(userMapper.selectUserInfoById(disbandTeamVO.getUserId()) == null) {
+            return ResponseVO.buildFailure("不存在该用户");
+        }
+        TeamIdentity teamIdentity = teamMemberMapper.selectMemberIdentityByTeamIdAndUserId(disbandTeamVO.getTeamId(),disbandTeamVO.getUserId());
+        if(teamIdentity == null){
+            return ResponseVO.buildFailure("该队伍中不存在该用户");
+        }
+        if(teamIdentity != TeamIdentity.LEADER){
+            return ResponseVO.buildFailure("没有权限");
+        }
+        // 获取队伍中所有成员
+        List<TeamMemberVO> list = teamMemberMapper.selectMemberByTeamId(disbandTeamVO.getTeamId());
+        // 成员逐个退出队伍
+        for(TeamMemberVO member : list){
+            QuitTeamVO quitTeamVO = new QuitTeamVO();
+            quitTeamVO.setTeamId(disbandTeamVO.getTeamId());
+            quitTeamVO.setUserId(member.getId());
+            teamMemberMapper.deleteTeamMember(quitTeamVO);
+        }
+        // 删除队伍
+        teamMapper.deleteTeam(disbandTeamVO);
+
+        return ResponseVO.buildSuccess();
+
     }
 }
