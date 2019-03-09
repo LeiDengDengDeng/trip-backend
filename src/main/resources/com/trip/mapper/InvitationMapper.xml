@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.trip.mapper.InvitationMapper">
+  <resultMap id="BaseResultMap" type="com.trip.vo.InvitationVO">
+    <result column="sender_id" jdbcType="INTEGER" property="senderId" />
+    <result column="receiver_id" jdbcType="INTEGER" property="receiverId" />
+    <result column="team_id" jdbcType="INTEGER" property="teamId" />
+    <result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+    <result column="has_read" jdbcType="TINYINT" property="hasRead" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id,sender_id, receiver_id, team_id, add_time, has_read
+  </sql>
+  <insert id="insert" parameterType="com.trip.vo.InvitationVO">
+    insert into invitation (sender_id, receiver_id,team_id)
+    values (#{senderId,jdbcType=INTEGER}, #{receiverId,jdbcType=INTEGER},
+      #{teamId,jdbcType=INTEGER})
+  </insert>
+
+  <select id="selectByReceiver" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM invitation
+    where receiver_id=#{receiverId}
+    ORDER BY id DESC
+  </select>
+
+  <select id="selectByReceiverAndRead" resultMap="BaseResultMap">
+    SELECT <include refid="Base_Column_List"/>
+    FROM invitation
+    where receiver_id=#{receiverId} AND has_read=#{hasRead}
+    ORDER BY id DESC
+  </select>
+
+  <update id="updateHasRead">
+    UPDATE invitation
+    SET has_read=#{hasRead}
+    WHERE id=#{id}
+  </update>
+
+</mapper>
