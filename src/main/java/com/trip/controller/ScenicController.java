@@ -35,9 +35,14 @@ public class ScenicController {
      * 获取所有景点
      * @return
      */
-    @RequestMapping(value = "scenics",method = RequestMethod.GET)
+    @RequestMapping(value = "/scenics",method = RequestMethod.GET)
     public ResponseVO getAllScenic(){
         return ResponseVO.buildSuccess(service.getAllScenic());
+    }
+
+    @RequestMapping(value = "/scenic/search/{name}")
+    public ResponseVO searchScenic(@PathVariable String name){
+        return service.searchScenic(name);
     }
 
     /**

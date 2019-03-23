@@ -26,6 +26,13 @@ public interface ScenicService {
     public List<ScenicInfoVO> getAllScenic();
 
     /**
+     * 根据名称模糊搜索
+     * @param name
+     * @return
+     */
+    public ResponseVO searchScenic(String name);
+
+    /**
      * 添加景点
      * @param scenicVO
      * @return

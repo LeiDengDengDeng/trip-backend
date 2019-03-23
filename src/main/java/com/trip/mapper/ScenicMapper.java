@@ -16,4 +16,6 @@ public interface ScenicMapper {
     List<ScenicVO> selectAll();
 
     int updateByPrimaryKeySelective(ScenicVO record);
+
+    List<ScenicVO> selectByName(String name);
 }

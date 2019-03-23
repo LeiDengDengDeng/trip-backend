@@ -40,6 +40,10 @@ public class ScenicServiceImpl implements ScenicService{
     @Override
     public List<ScenicInfoVO> getAllScenic() {
         List<ScenicVO> scenics=mapper.selectAll();
+        return getDetail(scenics);
+    }
+
+    private List<ScenicInfoVO> getDetail(List<ScenicVO> scenics){
         List<ScenicInfoVO> result=new ArrayList<>();
         for(ScenicVO scenic:scenics){
             ScenicInfoVO detail=getDetail(scenic);
@@ -48,6 +52,11 @@ public class ScenicServiceImpl implements ScenicService{
             }
         }
         return result;
+    }
+
+    @Override
+    public ResponseVO searchScenic(String name) {
+        return ResponseVO.buildSuccess(getDetail(mapper.selectByName(name)));
     }
 
     private ScenicInfoVO getDetail(ScenicVO basicInfo){
