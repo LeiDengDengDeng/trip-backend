@@ -41,4 +41,13 @@ public interface TeamService {
     ResponseVO getAllTeamsCanJoin();
 
     ResponseVO getMyEstablishedTeamNew(EstablishedTeamVO establishedTeamVO);
+
+    ResponseVO searchTeam(SearchTeamVO searchTeamVO);
+
+    /**
+     * 根据id查找用户历史出游(这里处理成返回该用户参加过的已经结束的队伍信息)
+     * @param id
+     * @return
+     */
+    ResponseVO getUserHistory(int id);
 }

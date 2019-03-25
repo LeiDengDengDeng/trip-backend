@@ -207,4 +207,17 @@ public class TeamServiceImpl implements TeamService {
             return ResponseVO.buildSuccess(teamInfoVOS);
         }
         }
+
+    @Override
+    public ResponseVO searchTeam(SearchTeamVO searchTeamVO) {
+        long currentTime = System.currentTimeMillis() / 1000;
+        searchTeamVO.setCurrentTime(currentTime);
+        return ResponseVO.buildSuccess(teamMapper.selectAllTeamsMatchConditions(searchTeamVO));
+    }
+
+    @Override
+    public ResponseVO getUserHistory(int id) {
+        long currentTime = System.currentTimeMillis() / 1000;
+        return ResponseVO.buildSuccess(teamMapper.selectUserHistory(id, currentTime));
+    }
 }

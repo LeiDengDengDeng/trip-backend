@@ -54,4 +54,8 @@ public interface TeamMapper {
     List<TeamInfoVO> selectAllTeamsByScenicId(@Param("scenicId") int scenicId, @Param("currentTime") long currentTime);
 
     List<TeamInfoVO> selectAllTeamsCanJoin(@Param("currentTime") long currentTime);
+
+    List<TeamInfoVO> selectAllTeamsMatchConditions(SearchTeamVO searchTeamVO);
+
+    List<TeamInfoVO> selectUserHistory(@Param("id") int id, @Param("currentTime") long currentTime);
 }

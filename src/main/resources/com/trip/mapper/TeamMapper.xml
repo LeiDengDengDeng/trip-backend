@@ -96,4 +96,34 @@
         from team t,team_member tm,scenic s where t.id = tm.team_id and s.id = t.scenic_id group by t.id having start_time > #{currentTime} and maximumLimit > memberNum
     </select>
 
+    <select id="selectAllTeamsMatchConditions" resultType="com.trip.vo.TeamInfoVO">
+        select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
+       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,
+       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl
+        from team t,team_member tm,scenic s where
+        <if test="keyWord != null">
+          t.name like CONCAT('%',#{keyWord},'%') and
+        </if>
+        t.id = tm.team_id and s.id = t.scenic_id
+        <if test="scenicNameKeyWord != null">
+            and s.id in (select id from scenic where name like CONCAT('%',#{scenicNameKeyWord},'%'))
+        </if>
+        group by t.id having
+        <if test="beforeTime != null">
+            start_time &lt;= #{beforeTime} and
+        </if>
+        <if test="beforeTime == null">
+            start_time > #{currentTime} and
+        </if>
+        maximumLimit > memberNum
+    </select>
+
+    <select id="selectUserHistory" resultType="com.trip.vo.TeamInfoVO">
+        select t.id,t.name,t.establish_time as establishTime,t.minimum_limit as minimumLimit,
+       t.maximum_limit as maximumLimit,t.start_time as startTime,t.end_time as endTime,t.intro,t.average,
+       t.scenic_id as scenicId,count(*) as memberNum,s.name as scenicName,s.icon_url as scenicPicUrl
+        from team t,(select * from team_member where user_id = #{id}) tm,scenic s
+        where t.id = tm.team_id and s.id = t.scenic_id and t.end_time &lt;= #{currentTime}
+        group by t.id order by t.end_time desc
+    </select>
 </mapper>

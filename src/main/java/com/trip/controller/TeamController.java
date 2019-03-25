@@ -79,6 +79,16 @@ public class TeamController {
         return teamService.disbandTeam(disbandTeamVO);
     }
 
+    @RequestMapping(value = "team/search",method = RequestMethod.POST)
+    public ResponseVO joinTeam(@RequestBody SearchTeamVO searchTeamVO){
+        return teamService.searchTeam(searchTeamVO);
+    }
+
+    @RequestMapping(value = "team/history/user/{id}",method = RequestMethod.GET)
+    public ResponseVO getUserHistory(@PathVariable int id){
+        return teamService.getUserHistory(id);
+    }
+
 
 
 
